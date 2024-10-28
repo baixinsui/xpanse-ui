@@ -1,0 +1,18 @@
+# Dockerfile
+FROM nginx:latest
+
+# 创建证书目录
+RUN mkdir -p /etc/nginx/certs
+
+# 复制证书文件
+COPY certs/server.crt /etc/nginx/certs/
+COPY certs/server.key /etc/nginx/certs/
+
+# 复制 Nginx 配置文件
+COPY nginx-ssl.conf /etc/nginx/nginx.conf
+
+# 暴露 80 和 443 端口
+EXPOSE 80 443
+
+# 启动 Nginx
+CMD ["nginx", "-g", "daemon off;"]
